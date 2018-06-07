@@ -8,7 +8,7 @@ import os; import sqlite3
 
 class Database:
     '''Recursos de database'''
-    value=None; alert=''
+    value=None; message=''
 
     def __init__(this,database):
         ''' '''
@@ -25,9 +25,9 @@ class Database:
                    AGE            INT             NOT NULL,
                    ADDRESS        CHAR(50),
                    SALARY         REAL);''')
-            this.__class__.alert='A tabela '+table+' foi criada no banco de dados'
+            this.__class__.message='A tabela '+table+' foi criada no banco de dados'
         except sqlite3.OperationalError:
-            this.__class__.alert='A tabela '+table+' já existe neste banco de dados'
+            this.__class__.message='A tabela '+table+' já existe neste banco de dados'
 
 
     def insert(this,table,row):
@@ -36,9 +36,8 @@ class Database:
         
         this.__class__.value.execute('''INSERT INTO '''+table+''' (NAME,AGE,ADDRESS,SALARY) \
                 VALUES (?,?,?,?)''',row)
-
         this.__class__.value.commit()
-
+        this.__class__.message=('Os dados foram salvos com sucesso')
 
     def consulte(this,table,id):
         '''Returna os dados de uma pesquisa no banco de dados'''
@@ -61,8 +60,10 @@ class Database:
                     c[0], c[1], c[2],
                     c[3], c[4], c[5],
                     c[6], c[7], c[8]))
+    
 
-
+    def info(cls):
+        print('\t'+cls.message)
 
 
     def status(cls):
