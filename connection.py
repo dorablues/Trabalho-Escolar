@@ -29,14 +29,39 @@ class Database:
         except sqlite3.OperationalError:
             this.__class__.alert='A tabela '+table+' já existe neste banco de dados'
 
-    def consulte(this,id):
-        '''Returna os dados de uma pesquisa no banco de dados'''
 
+    def insert(this,table,row):
+        ''' '''
         this.__class__.value=sqlite3.connect(this.database)
+        
+        this.__class__.value.execute('''INSERT INTO '''+table+''' (NAME,AGE,ADDRESS,SALARY) \
+                VALUES (?,?,?,?)''',row)
 
-        this.__class__.value.execute("")
+        this.__class__.value.commit()
 
-        this.__class__.alert='A tabela '+table+' foi criada no banco de dados'
+
+    def consulte(this,table,id):
+        '''Returna os dados de uma pesquisa no banco de dados'''
+        #
+
+        def read():
+            #
+            sql = 'SELECT * FROM '+table+' ORDER BY nome'
+            r = self.db.cursor.execute(sql)
+            return r.fetchall()
+
+        def show():
+            #
+            lista = self.ler_todos_clientes()
+            print('{:>3s} {:20s} {:<5s} {:15s} {:21s} {:14s} {:15s} {:s} {:s}'.format(
+                'id', 'nome', 'idade', 'cpf', 'email', 'fone', 'cidade', 'uf', 'criado_em'))
+
+            for c in lista:
+                print('{:3d} {:23s} {:2d} {:s} {:>25s} {:s} {:15s} {:s} {:s}'.format(
+                    c[0], c[1], c[2],
+                    c[3], c[4], c[5],
+                    c[6], c[7], c[8]))
+
 
 
 
