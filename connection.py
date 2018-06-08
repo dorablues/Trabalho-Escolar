@@ -14,6 +14,9 @@ class Database:
         ''' '''
         this.database=database
         this.__class__.value=sqlite3.connect(database)
+        # não utilizado
+        this.__class__.content=None
+
     ''' metodos de funcao '''
     def new(this,table):
         '''Cria uma nova tabela em um banco de dados'''
@@ -39,29 +42,32 @@ class Database:
         this.__class__.value.commit()
         this.__class__.message=('Os dados foram salvos com sucesso')
 
+
     def consulte(this,table,id):
-        '''Returna os dados de uma pesquisa no banco de dados'''
-        #
+        '''Consulta em uma tabela de dados e retorna com um registro'''
+        # a linha a seguir faz a conexão com o banco de dados
+        this.__class__.value=sqlite3.connect(this.database)
+        # reader é o cursor de leitura deste método
+        reader = this.__class__.value.cursor()
+        # content é uma lista com os dados de registro gerado por ID
+        content=reader.execute('SELECT * FROM '+table+' WHERE id = ?', (id,))
+        # esta linha ainda apresenta inconsistencia
+        if content == None:
+            print(this.__class__.message) # !!! não está funcionando !!!
+        # exibe uma grade com os registros alinhados de forma organizada
+        # favor, não alterar este bloco
+        else:
+            # pula duas linhas antes de exibir o conteúdo
+            print('\t\t')
+            # grade de exibicao, não alterar abaixo
+            for block in content:
+                print('\t#ID: {:<5} CLIENTE: {:<25}\
+        {} \n\tIdade: {:>5} anos \n\
+        Endereço: {} \n\
+        Salário:  R${}'.format(block[0],block[1],('\n\t'+'==-='*10),block[2],block[3],block[4]))
 
-        def read():
-            #
-            sql = 'SELECT * FROM '+table+' ORDER BY nome'
-            r = self.db.cursor.execute(sql)
-            return r.fetchall()
-
-        def show():
-            #
-            lista = self.ler_todos_clientes()
-            print('{:>3s} {:20s} {:<5s} {:15s} {:21s} {:14s} {:15s} {:s} {:s}'.format(
-                'id', 'nome', 'idade', 'cpf', 'email', 'fone', 'cidade', 'uf', 'criado_em'))
-
-            for c in lista:
-                print('{:3d} {:23s} {:2d} {:s} {:>25s} {:s} {:15s} {:s} {:s}'.format(
-                    c[0], c[1], c[2],
-                    c[3], c[4], c[5],
-                    c[6], c[7], c[8]))
     
-
+    # este metodo exibe uma mensagem 
     def info(cls):
         print('\t'+cls.message)
 
@@ -78,3 +84,5 @@ class Database:
         db=Database(str)
         db.new(str)
         db.status()
+        db.insert(str,tuple)
+        db.consulte(str,int)

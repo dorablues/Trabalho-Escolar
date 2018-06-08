@@ -6,7 +6,7 @@ from connection import *
 
 #   code
 def clear():
-    os.system('cls')
+    os.system('cls || clear')
 
 def pause():
     os.system('pause')

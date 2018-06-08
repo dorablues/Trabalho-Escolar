@@ -4,7 +4,7 @@
 from interface import *
 from connection import Database
 #   vaiable
-mainOption=('Guia Principal','Gerenciar Cadastro','Consultar Cadastro','Sobre os desenvolvedores','Sair do programa')
+mainOption=('Guia Principal','Gerenciar Cadastro','Consultar Cadastro','Sobre o programa','Sair do programa')
 cadOption=('Guia Principal > Gerenciar Cadastro','Novo Cadastro','Alterar cadastro','Excluir cadastro','Voltar Para a Guia Principal')
 label=('NOME','IDADE','ENDEREÇO','SALÁRIO')
 #   code
@@ -25,7 +25,7 @@ def main():
                 option=cadForm.layout()
                 #
                 if option==1:
-                    clear(); print('\n\t'+'---'*10); print('\tNOVO CADASTRO: ')
+                    clear(); print('\n\t'+'---'*10); print('\t'+cadOption[1])
                     #
                     for i in range(4):
                         #
@@ -50,7 +50,15 @@ def main():
                                     print('\tEste não é um endereço válido!')
                         #
                         if label[i]=='NOME':
-                            name=input('\tNOME: ')
+                            while True:
+                                try:
+                                    name=input('\t'+label[i]+': ')
+                                    if len(name)==0:
+                                        raise ValueError
+                                    break
+                                except ValueError:
+                                    print('\tO nome não pode ficar em branco.')
+
                         #
                         if label[i]=='SALÁRIO':
                             salary=float(input('\t'+label[i]+': '))                    
@@ -71,10 +79,23 @@ def main():
                     pass
                 elif option==4:
                     break
+        #   Consulta de cadastro no banco de dados
         elif option==2:
-            pass
+            # a linha a seguir limpa a tela e exibre o label de titulo da funcao 'Consular cadastro'
+            clear(); print('\n\t'+'---'*10); print('\t'+mainOption[2])
+            search=int(input('\tDigite o id: '))
+            db.consulte('CAD',search)
+
+
+            # saida da funcao
+            print('\n\n'); pause()
         elif option==3:
-            pass
+            clear(); print('\n\t'+'---'*10); print('\t'+mainOption[3])
+            print('\n\tTrabalho acadêmico do curso técnico de Informática\n\tDiciplina: Técnicas de Programação sobre ministração de Lucineia \n\n')
+
+            print('\tIntegrantes: \n\n\t1-Jhonatan Almeida \n\t2-João Mateus \n\t3-Larissa \n\t4-Rebeca')
+
+            print('\n\n'); pause()
         elif option==4:
             break
 
