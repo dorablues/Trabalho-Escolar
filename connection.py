@@ -86,6 +86,7 @@ class Database:
         Salário:  R${}'.format(block[0],block[1],('\n\t'+'==-='*10),block[2],block[3],block[4]))
 
     
+        # executa a funcao sql UPDATE, esta funcao atualiza um registro
     # este metodo exibe uma mensagem 
     def info(cls):
         print('\t'+cls.message)

@@ -2,11 +2,13 @@
 
 #   import
 from connection import *
+import subprocess
+import platform
 #   vaiable
 
 #   code
-def clear():
-    os.system("cls if os.name == 'nt' else 'clear'")
+def clear():    
+    os.system('cls')
 
 def pause():
     os.system('pause')
